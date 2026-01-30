@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vehicle Deal Discovery - Smart Buying Decisions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Title and Conclusion slides - Red/Black gradient */
+        .slide-title, .slide-conclusion {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #1f2937 100%);
+            color: white;
+            text-align: center;
+        }
+
+        /* Content slides - Light background */
+        .slide-content {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 12px;
+            margin: 0 auto 2rem auto;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #dc2626;
+        }
+
+        .slide-title h2, .slide-conclusion h2 {
+            color: white;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #991b1b;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.85;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-text {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-text {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .process-step {
+            flex: 1;
+            text-align: center;
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #dc2626;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-text {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .source-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 3px solid #dc2626;
+        }
+
+        .source-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .source-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .source-text {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .tech-category {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-list {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .timeline {
+            margin: 2rem 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #dc2626;
+        }
+
+        .timeline-week {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-text {
+            color: #64748b;
+        }
+
+        .value-banner {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .value-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .value-text {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .cta-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: white;
+            color: #dc2626;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .checkmarks {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+
+        .checkmark {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-info {
+            text-align: center;
+            margin-top: 2rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .problem-grid, .features-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .data-sources { grid-template-columns: 1fr; }
+            .process-steps { flex-direction: column; }
+            .process-step:not(:last-child)::after { 
+                content: '↓'; 
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: -2rem;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide slide-title">
+        <div class="container">
+            <img src="./PGAGI_LOGO.png" alt="PG-AGI Logo" class="logo">
+            <div class="badge">✓ AI-Powered Deal Intelligence</div>
+            <h1>AI VEHICLE DEAL DISCOVERY</h1>
+            <p class="subtitle">Your Personal Decision-Support System for Smart Vehicle Buying</p>
+            <p class="tagline">Automatically identify underpriced vehicles across marketplaces—with clear price comparisons and confidence scores</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Data Sources</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">AI</div>
+                    <div class="stat-label">Matching Intelligence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Automated Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>The Challenge</h2>
+            <p class="tagline">Finding profitable vehicle deals requires constant monitoring and manual price comparisons</p>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <div class="problem-title">Time-Consuming Research</div>
+                    <div class="problem-text">Manually checking Facebook Marketplace, OpenLane, and Manheim daily takes hours—leaving gaps where great deals slip through unnoticed</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <div class="problem-title">Missing Market Context</div>
+                    <div class="problem-text">Without knowing recent sold prices on Facebook, it's impossible to tell if a dealer listing is truly underpriced or just average</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🔍</div>
+                    <div class="problem-title">Inconsistent Comparisons</div>
+                    <div class="problem-text">Vehicle specs vary across platforms—manual matching is prone to errors, leading to false opportunities or missed real deals</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">❓</div>
+                    <div class="problem-title">No Confidence Indicators</div>
+                    <div class="problem-text">Even when deals look good, there's no systematic way to assess data quality, comparable vehicle count, or overall deal reliability</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Solution Overview -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>Meet Your Deal Discovery System</h2>
+            <p class="tagline">AI-powered automation that finds underpriced vehicles and delivers clear buying insights</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">Automated Data Collection</div>
+                    <div class="feature-text">Background agents continuously monitor Facebook Marketplace (via Zyte scraper) and dealer platforms (OpenLane, Manheim APIs)—no manual checking required</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Intelligent Vehicle Matching</div>
+                    <div class="feature-text">AI normalizes vehicle specs across platforms and matches dealer listings with recently sold Facebook vehicles based on make, model, year, and mileage</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <div class="feature-title">Price Comparison & Deal Detection</div>
+                    <div class="feature-text">System compares dealer Buy It Now prices against Facebook sold prices—automatically flags vehicles priced below market with clear price deltas</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Simple Admin Dashboard</div>
+                    <div class="feature-text">Clean, personalized dashboard shows flagged deals, confidence scores, and supporting data—enabling fast, informed buying decisions without guesswork</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: How It Works -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>How It Works</h2>
+            <p class="tagline">Automated intelligence pipeline running 24/7 in the background</p>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Collect</div>
+                    <div class="step-text">Scrape Facebook Marketplace listings. Fetch dealer inventory from OpenLane & Manheim APIs.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Track Sold</div>
+                    <div class="step-text">Monitor Facebook listings for availability changes. Infer sold vehicles with final prices and timestamps.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Match</div>
+                    <div class="step-text">Normalize vehicle specs. Match dealer vehicles with similar Facebook sold listings using similarity rules.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Compare</div>
+                    <div class="step-text">Calculate reference sold prices. Flag dealer listings priced below Facebook market values.</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Score</div>
+                    <div class="step-text">Assign confidence scores based on data quality, comparable count, and recency. Display in dashboard.</div>
+                </div>
+            </div>
+            <div class="value-banner">
+                <div class="value-title">🎯 Built for Your Decision-Making</div>
+                <div class="value-text">All heavy computation happens in the background—dashboard shows only actionable deals with clear explanations</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Data Sources -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>Three Key Data Sources</h2>
+            <p class="tagline">Comprehensive coverage of private seller and dealer marketplaces</p>
+            <div class="data-sources">
+                <div class="source-card">
+                    <div class="source-icon">📱</div>
+                    <div class="source-title">Facebook Marketplace</div>
+                    <div class="source-text">Zyte-powered web scraper tracks active listings and infers sold vehicles by monitoring lifecycle changes—captures real market prices</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon">🏢</div>
+                    <div class="source-title">OpenLane Dealer</div>
+                    <div class="source-text">Official API fetches Buy It Now listings with vehicle specs, pricing, fees, and VIN—updated continuously for fresh inventory</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon">🚗</div>
+                    <div class="source-title">Manheim Dealer</div>
+                    <div class="source-text">Official API pulls Buy It Now listings with full vehicle details—provides professional dealer inventory for comparison</div>
+                </div>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                <h3>🔄 Continuous Background Processing</h3>
+                <p style="color: #64748b;">Data ingestion, matching, and scoring run automatically—dashboard shows only final results, no manual data entry required</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Dashboard Features -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>Simple, Actionable Dashboard</h2>
+            <p class="tagline">Clear insights designed for fast buying decisions</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Flagged Deal List</div>
+                    <div class="feature-text">See all underpriced vehicles in one place. Filter by make, model, price delta, or confidence score. Sort by opportunity size to prioritize best deals first.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Price Delta Analysis</div>
+                    <div class="feature-text">Clear comparison showing dealer Buy It Now price vs average Facebook sold price. Immediate visibility into potential profit margin before buying.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title">Confidence Scoring</div>
+                    <div class="feature-text">Every deal includes confidence indicator based on: comparable vehicle count, spec similarity, data quality, and recency. Know when to trust a flagged opportunity.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">Drill-Down Details</div>
+                    <div class="feature-text">Click any deal to see full breakdown: dealer listing specs, matched Facebook sold references, timestamps, and clear explanation of why deal was flagged.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Technology & Timeline -->
+    <div class="slide slide-content">
+        <div class="container">
+            <h2>Technology Stack & 4-Week Timeline</h2>
+            <p class="tagline">Rapid production-ready automation with enterprise-grade components</p>
+            <div class="tech-stack" style="margin-bottom: 3rem;">
+                <div class="tech-item">
+                    <div class="tech-category">Frontend</div>
+                    <div class="tech-list">Next.js, TailwindCSS, shadcn/ui</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-category">Backend</div>
+                    <div class="tech-list">FastAPI, Python, Celery/RQ</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-category">Database</div>
+                    <div class="tech-list">PostgreSQL (structured data)</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-category">Scraping</div>
+                    <div class="tech-list">Zyte (Facebook Marketplace)</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-category">APIs</div>
+                    <div class="tech-list">OpenLane & Manheim Official</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-category">Deployment</div>
+                    <div class="tech-list">Docker, GCP Cloud Run, CI/CD</div>
+                </div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-week">Week 1: Foundation & Facebook Marketplace Ingestion</div>
+                    <div class="timeline-text">Project kickoff and scope finalization, FastAPI backend setup with PostgreSQL schema, Next.js dashboard initialization, Zyte scraper integration for Facebook listings, active listing tracking with sold inference logic</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Week 2: Dealer APIs & Vehicle Normalization</div>
+                    <div class="timeline-text">OpenLane & Manheim API integration for Buy It Now listings, dealer inventory storage and refresh logic, vehicle normalization across all platforms (make, model, year, mileage standardization)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Week 3: Matching, Comparison & Confidence Scoring</div>
+                    <div class="timeline-text">Intelligent matching engine with similarity rules, price comparison logic (dealer vs Facebook sold), deal detection and flagging, confidence scoring based on data quality and comparable count</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Week 4: Dashboard, Testing & Deployment</div>
+                    <div class="timeline-text">Complete dashboard with deal list, filters, drill-downs, and confidence indicators, backend APIs for data retrieval, end-to-end testing, performance optimization, Docker deployment with CI/CD, final demo and handover</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Call to Action -->
+    <div class="slide slide-conclusion">
+        <div class="container">
+            <img src="./PGAGI_LOGO.png" alt="PG-AGI Logo" class="logo">
+            <h2>Make Smarter Vehicle Buying Decisions</h2>
+            <p class="cta-text">Stop missing underpriced deals—let AI find profitable opportunities while you focus on closing transactions</p>
+            <div class="cta-buttons">
+                <a href="https://pgagi.in/" class="btn btn-primary">Schedule Demo</a>
+                <a href="https://docs.google.com/document/d/1Db5QbaOoBbzys25o9459u1P7-KGVgv4ZBSFbJKJqoT0/edit?usp=sharing" class="btn btn-secondary">View Complete Proposal</a>
+            </div>
+            <div class="checkmarks">
+                <div class="checkmark">✓ 24/7 Automated Monitoring</div>
+                <div class="checkmark">✓ AI-Powered Matching</div>
+                <div class="checkmark">✓ Clear Price Comparisons</div>
+                <div class="checkmark">✓ 5-Week Delivery</div>
+            </div>
+            <div class="company-info">
+                <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Powered by PG-AGI</p>
+                <p>45+ AI Specialists | Trusted by Leading Enterprises</p>
+                <p style="margin-top: 1rem;">contact@pgagi.com | pgagi.in</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
